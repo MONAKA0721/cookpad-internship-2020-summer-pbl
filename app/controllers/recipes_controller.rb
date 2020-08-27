@@ -18,9 +18,11 @@ class RecipesController < ActionController::Base
 
     def search
         recipe = Recipe.search(params[:name])
+        @okazu = params[:name]
         if recipe.present?
             @comment = "こんなメニューがコンロを使わずもう一品作れるよ！"
             @recommended_recipes = recommend_recipes_for(recipe)
+            @recommended_recipes = @recommended_recipes.sort_by{|x| (types_to_values(recipe.nutrition.to_set + x.nutrition.to_set)).sum}.reverse
             gon.nutritions = 
                 @recommended_recipes.map do |recommended_recipe|
                     types_to_values(recipe.nutrition.to_set + recommended_recipe.nutrition.to_set)

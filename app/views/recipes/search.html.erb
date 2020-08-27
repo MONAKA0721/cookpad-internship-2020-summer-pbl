@@ -2,15 +2,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/components.min.css" integrity="sha512-TizAONqhvXjEfRPhptSUkZNVU497PzAnXNGNUoeOjeni4dHpJ+ak+ZsyoGna20LH/yg1PvdufN1VbnVQeVDftg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/utilities.css" integrity="sha512-b10FuxC4JBxJ+GF9PKvhj3G/EmvwUtSbfJ6lP6rkgGGREdQc8yl15/OkcphCF1EwWwfm3lUdC5mOsBL1Eaj9yA==" crossorigin="anonymous" />
 
+<h1>メインのおかず</h1>
+<h2><%= @okazu %></h2>
 <h1><%= @comment %></h1>
 <ul>
   <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
   <div class="flex items-center">
     <div>
-      <span>メインのおかずと作ったときの栄養バランス</span><br>
+      <span><%= @okazu %>と作ったときの栄養バランス</span><br>
       <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
     </div>
     <%= link_to recommended_recipe.title, recommended_recipe %>
+    <% if recommended_recipe.kind == 1 %>
+      <%= image_tag 'range.png' %>
+    <% elsif recommended_recipe.kind == 2 %>
+      <%= image_tag 'o.png' %>
+    <% end %>
   </div>
   <br>
   <hr>

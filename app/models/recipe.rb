@@ -18,10 +18,11 @@ class Recipe < ApplicationRecord
 
     def self.find_by_nutrition_types(nutrition_types)
         recipes = []
-        Recipe.find_each do |recipe|
+        Recipe.where('kind = 1 or kind = 2').find_each do |recipe|
             # TODO ロジック検討の余地あり
             # 栄養素の包含関係
-            if nutrition_types.to_set.subset?(recipe.nutrition.to_set)
+            if (nutrition_types.to_set - recipe.nutrition.to_set).size <= 1
+            # if recipe.nutrition.to_set.subset?(nutrition_types.to_set)
                 recipes << recipe
             end
         end
