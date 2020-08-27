@@ -3,7 +3,6 @@ create_table "steps", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8
   t.integer  "position",                null: false
 
   t.integer  "recipe_id",               null: false
-  t.integer  "utensil_id"
 
   t.datetime "created_at",              null: false
   t.datetime "updated_at",              null: false
