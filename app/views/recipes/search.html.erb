@@ -2,20 +2,25 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/components.min.css" integrity="sha512-TizAONqhvXjEfRPhptSUkZNVU497PzAnXNGNUoeOjeni4dHpJ+ak+ZsyoGna20LH/yg1PvdufN1VbnVQeVDftg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/utilities.css" integrity="sha512-b10FuxC4JBxJ+GF9PKvhj3G/EmvwUtSbfJ6lP6rkgGGREdQc8yl15/OkcphCF1EwWwfm3lUdC5mOsBL1Eaj9yA==" crossorigin="anonymous" />
 
-<%= render :partial => "form" %>
-
 <h1><%= @comment %></h1>
 <ul>
   <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
-  <div class="flex items-center"> 
-    <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
+  <div class="flex items-center">
+    <div>
+      <span>メインのおかずと作ったときの栄養バランス</span><br>
+      <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
+    </div>
     <%= link_to recommended_recipe.title, recommended_recipe %>
   </div>
   <br>
   <hr>
   <% end %>
 </ul>
-<%= link_to '主菜一覧に戻る', recipes_path %>
+
+<h1>他のおかずにする？</h1>
+<%= render :partial => "form" %>
+
+<%= link_to 'トップに戻る', root_path %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 gon.nutritions.forEach((nutrition, index) => {
