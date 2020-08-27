@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/components.min.css" integrity="sha512-TizAONqhvXjEfRPhptSUkZNVU497PzAnXNGNUoeOjeni4dHpJ+ak+ZsyoGna20LH/yg1PvdufN1VbnVQeVDftg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/utilities.css" integrity="sha512-b10FuxC4JBxJ+GF9PKvhj3G/EmvwUtSbfJ6lP6rkgGGREdQc8yl15/OkcphCF1EwWwfm3lUdC5mOsBL1Eaj9yA==" crossorigin="anonymous" />
+<%= Gon::Base.render_data %>
 <p id="notice"><%= notice %></p>
 
 <h1><%= @recipe.title %></h1>
@@ -19,16 +22,46 @@
     <br />
   <% end %>
 </p>
-
 <h1>これだけだと足りないなぁ<br>そんなあなたに<br>コンロを使わずもう一品！</h1>
-<table>
-  <tbody>
-    <% @recommended_recipes.each do |recipe| %>
-      <tr>
-        <td><%= link_to recipe.title, recipe %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<ul>
+  <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
+  <div class="flex items-center"> 
+    <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
+    <%= link_to recommended_recipe.title, recommended_recipe %>
+  </div>
+  <br>
+  <hr>
+  <% end %>
+</ul>
 <%= link_to '主菜一覧に戻る', recipes_path %>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+gon.nutritions.forEach((nutrition, index) => {
+  var ctx = document.getElementById(`myChart-${ index }`).getContext('2d');
+  var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'radar',
+
+      data: {
+      labels: ['炭水化物1', '炭水化物2', 'タンパク質1', 'タンパク質2', '脂質', 'ビタミン・ミネラル'],
+      datasets: [{
+          data: nutrition
+      }]
+      },
+
+      options: {
+        legend: {display: false},
+        responsive: false,
+        scale: {
+          ticks: {
+            beginAtZero: true,
+            max: 5,
+            min: 0,
+            stepSize: 1
+          }
+        }
+      }
+  });
+});
+</script>
+
