@@ -4,7 +4,7 @@
 
 <%= render :partial => "form" %>
 
-<h1>こんなメニューが<br>コンロを使わずもう一品作れるよ！</h1>
+<h1><%= @comment %></h1>
 <ul>
   <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
   <div class="flex items-center"> 

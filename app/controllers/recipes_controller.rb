@@ -17,12 +17,19 @@ class RecipesController < ActionController::Base
     end
 
     def search
-        @recipe = Recipe.search(params[:name])
-        @recommended_recipes = recommend_recipes_for(@recipe)
-        gon.nutritions = 
-            @recommended_recipes.map do |recipe|
-                types_to_values(@recipe.nutrition.to_set + recipe.nutrition.to_set)
-            end
+        recipe = Recipe.search(params[:name])
+        if recipe.present?
+            @comment = "こんなメニューがコンロを使わずもう一品作れるよ！"
+            @recommended_recipes = recommend_recipes_for(recipe)
+            gon.nutritions = 
+                @recommended_recipes.map do |recommended_recipe|
+                    types_to_values(recipe.nutrition.to_set + recommended_recipe.nutrition.to_set)
+                end
+        else
+            @comment = "主菜が見つけられませんでした、、、こんなメニューがコンロを使わず作れます"
+            @recommended_recipes = Recipe.all
+            gon.nutritions = []
+        end
     end
 
     private
