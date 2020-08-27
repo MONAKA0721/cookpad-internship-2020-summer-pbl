@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>タイトル:</strong>
+  <%= @recipe.title %>
+</p>
+
+<p>
+  <strong>材料:</strong>
+  <br />
+  <% @recipe.ingredients.each do |ingredient| %>
+    <%= ingredient.name + ' ' + ingredient.quantity %>
+    <br />
+  <% end %>
+</p>
+
+<p>
+  <strong>手順:</strong>
+  <br />
+  <% @recipe.steps.each.with_index(1) do |step, idx| %>
+    <%= "#{idx}. #{step.description}" %>
+    <br />
+  <% end %>
+</p>
+
+<%= link_to '一覧に戻る', recipes_path %>
