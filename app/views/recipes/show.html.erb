@@ -19,18 +19,17 @@
     <br />
   <% end %>
 </p>
-<h1>これだけだと足りないなぁ<br>そんなあなたに<br>コンロを使わずもう一品！</h1>
+<h1>他にも同じような栄養素でこんな副菜があるよ！</h1>
 <ul>
   <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
   <div class="flex items-center"> 
-    <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
     <%= link_to recommended_recipe.title, recommended_recipe %>
   </div>
   <br>
   <hr>
   <% end %>
 </ul>
-<%= link_to '主菜一覧に戻る', recipes_path %>
+<%= link_to 'トップに戻る', root_path %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 gon.nutritions.forEach((nutrition, index) => {
