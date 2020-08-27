@@ -1,10 +1,23 @@
 class RecipesController < ActionController::Base
+
+    def home
+    end
+
     def index
         @recipes = Recipe.all
     end
 
     def show
         @recipe = Recipe.find(params[:id])
+        @recommended_recipes = recommend_recipes_for(@recipe)
+        gon.nutritions = 
+            @recommended_recipes.map do |recipe|
+                types_to_values(@recipe.nutrition.to_set + recipe.nutrition.to_set)
+            end
+    end
+
+    def search
+        @recipe = Recipe.search(params[:name])
         @recommended_recipes = recommend_recipes_for(@recipe)
         gon.nutritions = 
             @recommended_recipes.map do |recipe|

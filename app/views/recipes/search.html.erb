@@ -1,25 +1,10 @@
-<p id="notice"><%= notice %></p>
+<%= Gon::Base.render_data %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/components.min.css" integrity="sha512-TizAONqhvXjEfRPhptSUkZNVU497PzAnXNGNUoeOjeni4dHpJ+ak+ZsyoGna20LH/yg1PvdufN1VbnVQeVDftg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/utilities.css" integrity="sha512-b10FuxC4JBxJ+GF9PKvhj3G/EmvwUtSbfJ6lP6rkgGGREdQc8yl15/OkcphCF1EwWwfm3lUdC5mOsBL1Eaj9yA==" crossorigin="anonymous" />
 
-<h1><%= @recipe.title %></h1>
+<%= render :partial => "form" %>
 
-<p>
-  <strong>材料:</strong>
-  <br />
-  <% @recipe.ingredients.each do |ingredient| %>
-    <%= ingredient.name + ' ' + ingredient.quantity %>
-    <br />
-  <% end %>
-</p>
-
-<p>
-  <strong>手順:</strong>
-  <br />
-  <% @recipe.steps.each.with_index(1) do |step, idx| %>
-    <%= "#{idx}. #{step.description}" %>
-    <br />
-  <% end %>
-</p>
-<h1>これだけだと足りないなぁ<br>そんなあなたに<br>コンロを使わずもう一品！</h1>
+<h1>こんなメニューが<br>コンロを使わずもう一品作れるよ！</h1>
 <ul>
   <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
   <div class="flex items-center"> 
@@ -61,4 +46,6 @@ gon.nutritions.forEach((nutrition, index) => {
   });
 });
 </script>
+
+
 

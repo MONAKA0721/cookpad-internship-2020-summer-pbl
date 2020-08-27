@@ -27,5 +27,9 @@ class Recipe < ApplicationRecord
         end
         recipes
     end
+
+    def self.search(name)
+        recipe = Recipe.where('title LIKE ?', "%#{name}%").first
+    end
 end
   
