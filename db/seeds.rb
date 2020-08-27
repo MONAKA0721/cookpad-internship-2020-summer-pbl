@@ -22,6 +22,7 @@ recipes = []
 ].each do |recipe_title|
   recipes << Recipe.create!(
     title: recipe_title,
+    kind: 0, # 主菜
     steps_attributes: rand(1..4).times.map do |i|
       { description: "手順 #{i + 1}", position: i }
     end,

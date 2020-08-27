@@ -1,9 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>タイトル:</strong>
-  <%= @recipe.title %>
-</p>
+<h1><%= @recipe.title %></h1>
 
 <p>
   <strong>材料:</strong>
@@ -23,4 +20,15 @@
   <% end %>
 </p>
 
-<%= link_to '一覧に戻る', recipes_path %>
+<h1>これだけだと足りないなぁ<br>そんなあなたに<br>コンロを使わずもう一品！</h1>
+<table>
+  <tbody>
+    <% @recommended_recipes.each do |recipe| %>
+      <tr>
+        <td><%= link_to recipe.title, recipe %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to '主菜一覧に戻る', recipes_path %>
