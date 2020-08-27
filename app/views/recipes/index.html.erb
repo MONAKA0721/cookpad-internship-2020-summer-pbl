@@ -1,2 +1,13 @@
 <h1 id="title">レシピ一覧</h1>
-<% @recipes %>
+
+<table>
+  <tbody>
+    <% @recipes.each do |recipe| %>
+      <tr>
+        <td><%= link_to recipe.title, '#' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
