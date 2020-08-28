@@ -14,7 +14,7 @@ class Recipe < ApplicationRecord
 
     def self.find_by_nutrition_types(for_recipe, nutrition_types, limit)
         recipes = []
-        Recipe.where('kind = 1 or kind = 2').find_each do |recipe|
+        Recipe.where('kind != 0').find_each do |recipe|
             # TODO ロジック検討の余地あり
             # 栄養素の包含関係
             if (nutrition_types.to_set & recipe.nutrition.to_set).size >= limit

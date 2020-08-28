@@ -35,7 +35,7 @@ class RecipesController < ActionController::Base
         else
             @okazu = ""
             @comment = "主菜が見つけられませんでした、、、こんなメニューがコンロを使わず作れます"
-            @recommended_recipes = Recipe.where('kind = 1 or kind = 2').take(20)
+            @recommended_recipes = Recipe.where('kind != 0').take(20)
             gon.nutritions = []
         end
     end
