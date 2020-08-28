@@ -12,18 +12,16 @@ class Recipe < ApplicationRecord
         end
     end
 
-    def self.find_by_lack_nutrition(lack_nutrition_types)
-        find_by_nutrition_types(lack_nutrition_types)
-    end
-
-    def self.find_by_nutrition_types(nutrition_types)
+    def self.find_by_nutrition_types(for_recipe, nutrition_types, limit)
         recipes = []
         Recipe.where('kind = 1 or kind = 2').find_each do |recipe|
             # TODO ロジック検討の余地あり
             # 栄養素の包含関係
-            if (nutrition_types.to_set - recipe.nutrition.to_set).size <= 1
+            if (nutrition_types.to_set & recipe.nutrition.to_set).size >= limit
             # if recipe.nutrition.to_set.subset?(nutrition_types.to_set)
-                recipes << recipe
+                if for_recipe != recipe
+                    recipes << recipe
+                end
             end
         end
         recipes

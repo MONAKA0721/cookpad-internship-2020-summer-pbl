@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= Gon::Base.render_data %>
 
 <h1><%= @recipe.title %></h1>
 
@@ -19,19 +19,40 @@
     <br />
   <% end %>
 </p>
+<div class="flex items-center">
+  <canvas id="myChart" style="display: inline;"></canvas>
+  <h2><%= @okazu %></h2>
+</div>
 <h1>他にも同じような栄養素でこんな副菜があるよ！</h1>
-<ul>
-  <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
-  <div class="flex items-center"> 
-    <%= link_to recommended_recipe.title, recommended_recipe %>
-  </div>
-  <br>
-  <hr>
-  <% end %>
-</ul>
+<%= render 'recipes', recipes: @similar_recipes, okazu: "" %>
 <%= link_to 'トップに戻る', root_path %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
+var ctx = document.getElementById(`myChart`).getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'radar',
+
+    data: {
+    labels: ['炭水化物1', '炭水化物2', 'タンパク質1', 'タンパク質2', '脂質', 'ビタミン・ミネラル'],
+    datasets: [{
+        data: gon.main_nutritions
+    }]
+    },
+
+    options: {
+      legend: {display: false},
+      responsive: false,
+      scale: {
+        ticks: {
+          beginAtZero: true,
+          max: 5,
+          min: 0,
+          stepSize: 1
+        }
+      }
+    }
+});
 gon.nutritions.forEach((nutrition, index) => {
   var ctx = document.getElementById(`myChart-${ index }`).getContext('2d');
   var chart = new Chart(ctx, {

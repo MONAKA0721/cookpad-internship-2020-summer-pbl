@@ -2,30 +2,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/components.min.css" integrity="sha512-TizAONqhvXjEfRPhptSUkZNVU497PzAnXNGNUoeOjeni4dHpJ+ak+ZsyoGna20LH/yg1PvdufN1VbnVQeVDftg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/utilities.css" integrity="sha512-b10FuxC4JBxJ+GF9PKvhj3G/EmvwUtSbfJ6lP6rkgGGREdQc8yl15/OkcphCF1EwWwfm3lUdC5mOsBL1Eaj9yA==" crossorigin="anonymous" />
 
-<h1>メインのおかず</h1>
-<div class="flex items-center">
-  <canvas id="myChart" style="display: inline;"></canvas>
-  <h2><%= @okazu %></h2>
-</div>
-<h1><%= @comment %></h1>
-<ul>
-  <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
+<% if @okazu.present? %>
+  <h1>メインのおかず</h1>
   <div class="flex items-center">
-    <div>
-      <span><%= @okazu %>と作ったときのトータル栄養バランス</span><br>
-      <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
-    </div>
-    <%= link_to recommended_recipe.title, recommended_recipe %>
-    <% if recommended_recipe.kind == 1 %>
-      <%= image_tag 'range.png' %>
-    <% elsif recommended_recipe.kind == 2 %>
-      <%= image_tag 'o.png' %>
-    <% end %>
+    <canvas id="myChart" style="display: inline;"></canvas>
+    <h2><%= @okazu %></h2>
   </div>
-  <br>
-  <hr>
-  <% end %>
-</ul>
+<% end %>
+<h1><%= @comment %></h1>
+<%= render 'recipes', recipes: @recommended_recipes, okazu: @okazu %>
 
 <h1>他のおかずにする？</h1>
 <%= render :partial => "form" %>
