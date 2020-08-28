@@ -3,13 +3,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.7.5/utilities.css" integrity="sha512-b10FuxC4JBxJ+GF9PKvhj3G/EmvwUtSbfJ6lP6rkgGGREdQc8yl15/OkcphCF1EwWwfm3lUdC5mOsBL1Eaj9yA==" crossorigin="anonymous" />
 
 <h1>メインのおかず</h1>
-<h2><%= @okazu %></h2>
+<div class="flex items-center">
+  <canvas id="myChart" style="display: inline;"></canvas>
+  <h2><%= @okazu %></h2>
+</div>
 <h1><%= @comment %></h1>
 <ul>
   <% @recommended_recipes.each_with_index do |recommended_recipe, index| %>
   <div class="flex items-center">
     <div>
-      <span><%= @okazu %>と作ったときの栄養バランス</span><br>
+      <span><%= @okazu %>と作ったときのトータル栄養バランス</span><br>
       <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
     </div>
     <%= link_to recommended_recipe.title, recommended_recipe %>
@@ -30,6 +33,31 @@
 <%= link_to 'トップに戻る', root_path %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
+var ctx = document.getElementById(`myChart`).getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'radar',
+
+    data: {
+    labels: ['炭水化物1', '炭水化物2', 'タンパク質1', 'タンパク質2', '脂質', 'ビタミン・ミネラル'],
+    datasets: [{
+        data: gon.main_nutritions
+    }]
+    },
+
+    options: {
+      legend: {display: false},
+      responsive: false,
+      scale: {
+        ticks: {
+          beginAtZero: true,
+          max: 5,
+          min: 0,
+          stepSize: 1
+        }
+      }
+    }
+});
 gon.nutritions.forEach((nutrition, index) => {
   var ctx = document.getElementById(`myChart-${ index }`).getContext('2d');
   var chart = new Chart(ctx, {

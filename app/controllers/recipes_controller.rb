@@ -21,15 +21,16 @@ class RecipesController < ActionController::Base
         @okazu = params[:name]
         if recipe.present?
             @comment = "こんなメニューがコンロを使わずもう一品作れるよ！"
+            gon.main_nutritions = types_to_values(recipe.nutrition.to_set)
             @recommended_recipes = recommend_recipes_for(recipe)
-            @recommended_recipes = @recommended_recipes.sort_by{|x| (types_to_values(recipe.nutrition.to_set + x.nutrition.to_set)).sum}.reverse
+            @recommended_recipes = @recommended_recipes.sort_by{|x| (types_to_values(recipe.nutrition.to_set + x.nutrition.to_set)).sum}.reverse.take(20)
             gon.nutritions = 
                 @recommended_recipes.map do |recommended_recipe|
                     types_to_values(recipe.nutrition.to_set + recommended_recipe.nutrition.to_set)
                 end
         else
             @comment = "主菜が見つけられませんでした、、、こんなメニューがコンロを使わず作れます"
-            @recommended_recipes = Recipe.all
+            @recommended_recipes = Recipe.all.take(20)
             gon.nutritions = []
         end
     end
