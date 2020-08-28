@@ -1,18 +1,18 @@
 <ul>
   <% recipes.each_with_index do |recipe, index| %>
     <div class="flex items-center">
-      <div>
-        <% if okazu != "" %>
-          <span><%= okazu %>と作ったときのトータル栄養バランス</span><br>
-        <% end %>
-        <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
-      </div>
       <%= link_to recipe.title, recipe %>
       <% if recipe.kind == 1 %>
         <%= image_tag 'range.png' %>
       <% elsif recipe.kind == 2 %>
         <%= image_tag 'o.png' %>
       <% end %>
+      <div>
+        <% if okazu != "" %>
+          <span><%= okazu %>と作ったときのトータル栄養バランス</span><br>
+        <% end %>
+        <canvas id="myChart-<%= index %>" style="display: inline;"></canvas>
+      </div>
     </div>
     <br>
     <hr>
